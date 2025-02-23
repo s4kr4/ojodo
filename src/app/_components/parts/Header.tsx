@@ -11,6 +11,7 @@ export default function Header() {
         <h1 className="text-xl font-bold">往生堂</h1>
         <nav>
           <Link href="/characters">キャラクター一覧</Link>
+          <Link href="/mypage">マイページ</Link>
         </nav>
       </div>
     </header>
