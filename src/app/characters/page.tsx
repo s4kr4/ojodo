@@ -1,6 +1,6 @@
 'use client';
 
-import CharacterList from './components/CharacterList';
+import CharacterList from './_components/CharacterList';
 
 /**
  * キャラクター一覧ページ

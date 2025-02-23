@@ -1,7 +1,7 @@
 'use client';
 
-import { useCharacters } from '../hooks/useCharacters';
-import { useSelectCaraters } from '../hooks/useSelectCharaters';
+import { useCharacters } from '../_hooks/useCharacters';
+import { useSelectCaraters } from '../_hooks/useSelectCharaters';
 
 export default function CharacterList() {
   const { characters } = useCharacters();
