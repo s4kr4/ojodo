@@ -1,4 +1,4 @@
-import { api } from "~/trpc/react";
+import { api } from '~/trpc/react';
 
 /**
  * キャラクター一覧を取得する

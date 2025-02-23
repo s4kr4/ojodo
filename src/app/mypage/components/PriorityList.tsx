@@ -1,9 +1,9 @@
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable, type DropResult } from 'react-beautiful-dnd';
 import { useSelectCaraters } from '../../characters/_hooks/useSelectCharaters';
 
 export default function PriorityList() {
   const { selectedCharacters } = useSelectCaraters();
-  const handleDragEnd = (result: any) => {
+  const handleDragEnd = (result: DropResult) => {
     console.log(result);
   };
   const handleRemoveCharacter = (id: number) => {
@@ -22,17 +22,9 @@ export default function PriorityList() {
           ignoreContainerClipping={false}
         >
           {(provided) => (
-            <div
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-              className="space-y-2"
-            >
+            <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-2">
               {selectedCharacters.map((userChar, index) => (
-                <Draggable
-                  key={userChar.id}
-                  draggableId={userChar.id.toString()}
-                  index={index}
-                >
+                <Draggable key={userChar.id} draggableId={userChar.id.toString()} index={index}>
                   {(provided) => (
                     <div
                       ref={provided.innerRef}
@@ -66,4 +58,4 @@ export default function PriorityList() {
       </DragDropContext>
     </div>
   );
-} 
+}
