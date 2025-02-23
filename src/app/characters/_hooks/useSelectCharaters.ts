@@ -1,6 +1,5 @@
 import { type Character } from '@prisma/client';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
 
 /**
@@ -9,20 +8,14 @@ import { api } from '~/trpc/react';
  */
 export function useSelectCaraters() {
   const { data: session } = useSession();
-  const [selectedCharacters, setSelectedCharacters] = useState<Character[]>([]);
-  const { data: characters = [], refetch: refetchCharacters } =
+  const { data: selectedCharacters = [], refetch: refetchCharacters } =
     api.character.getSelectedCharacters.useQuery();
 
   const characterSelectMutation = api.character.selectCharacter.useMutation({
     onSuccess: async () => {
       await refetchCharacters();
-      setSelectedCharacters(characters);
     },
   });
-
-  useEffect(() => {
-    setSelectedCharacters(characters);
-  }, [characters]);
 
   /**
    * キャラクター選択
