@@ -5,6 +5,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import AuthProvider from "~/components/providers/SessionProvider";
+import Header from "~/app/_components/parts/Header";
 
 export const metadata: Metadata = {
   title: "往生堂",
@@ -19,7 +20,12 @@ export default function RootLayout({
     <html lang="ja" className={`${GeistSans.variable}`}>
       <body>
         <AuthProvider>
-          <TRPCReactProvider>{children}</TRPCReactProvider>
+          <TRPCReactProvider>
+            <Header />
+            <main className="pt-16">
+              {children}
+            </main>
+          </TRPCReactProvider>
         </AuthProvider>
       </body>
     </html>
