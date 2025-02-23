@@ -2,6 +2,10 @@ import { Character, PrismaClient, UserCharacter } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
+/**
+ * キャラクター選択を管理するフック
+ * @returns 選択されたキャラクター一覧と選択操作関数
+ */
 export function useSelectCaraters() {
   const { data: session } = useSession();
   const [selectedCharacters, setSelectedCharacters] = useState<Character[]>([]);
