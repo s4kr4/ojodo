@@ -3,26 +3,18 @@ services:
   app:
     build:
       context: .
-      target: deps
-    container_name: genshin-planner-app-dev
-    command: npm run dev
+    container_name: genshin-planner-app
     env_file:
       - .env
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
     ports:
       - '3000:3000'
     networks:
       - genshin-planner-network
-    depends_on:
-      - db
 
   db:
     build:
       context: ./prisma
-    container_name: genshin-planner-db-dev
+    container_name: genshin-planner-db
     env_file:
       - .env
     environment:
@@ -32,15 +24,14 @@ services:
       - TZ=Asia/Tokyo
     ports:
       - '5432:5432'
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     networks:
       - genshin-planner-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
-    name: genshin-planner-db-dev-data
 
 networks:
   genshin-planner-network:
-    name: genshin-planner-network-dev
+    driver: bridge
