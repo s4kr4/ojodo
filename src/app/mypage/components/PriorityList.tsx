@@ -11,7 +11,7 @@ export default function PriorityList() {
   };
 
   return (
-    <div className="mb-8">
+    <div>
       <h2 className="text-2xl font-bold mb-4">育成優先順位</h2>
       <DragDropContext onDragEnd={handleDragEnd}>
         <Droppable
