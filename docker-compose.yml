@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+    container_name: genshin-planner-app
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    networks:
+      - genshin-planner-network
+
+  db:
+    build:
+      context: ./prisma
+    container_name: genshin-planner-db
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - TZ=Asia/Tokyo
+    ports:
+      - '5432:5432'
+    networks:
+      - genshin-planner-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  genshin-planner-network:
+    driver: bridge
