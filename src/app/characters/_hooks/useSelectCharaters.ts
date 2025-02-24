@@ -34,5 +34,10 @@ export function useSelectCaraters() {
     }
   };
 
-  return { selectedCharacters, handleCharacterSelect };
+  const handleCharacterRemove = (character: Character) => {
+    if (!session?.user?.id) return;
+    console.log('characterId', character.id);
+  };
+
+  return { selectedCharacters, handleCharacterSelect, handleCharacterRemove };
 }

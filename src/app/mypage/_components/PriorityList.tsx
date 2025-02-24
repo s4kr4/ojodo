@@ -1,61 +1,54 @@
-import { DragDropContext, Droppable, Draggable, type DropResult } from 'react-beautiful-dnd';
-import { useSelectCaraters } from '../../characters/_hooks/useSelectCharaters';
+'use client';
 
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { useSelectCaraters } from '../../characters/_hooks/useSelectCharaters';
+import SortableCharacterItem from './SortableCharacterItem';
+
+/**
+ * 育成優先順位リスト
+ * @returns 育成優先順位リスト
+ */
 export default function PriorityList() {
   const { selectedCharacters } = useSelectCaraters();
-  const handleDragEnd = (result: DropResult) => {
-    console.log(result);
-  };
-  const handleRemoveCharacter = (id: number) => {
-    console.log(id);
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    console.log(event);
   };
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">育成優先順位</h2>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable
-          droppableId="characters"
-          type="character"
-          isDropDisabled={false}
-          isCombineEnabled={false}
-          ignoreContainerClipping={false}
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext
+          items={selectedCharacters.map((char) => char.id)}
+          strategy={verticalListSortingStrategy}
         >
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-2">
-              {selectedCharacters.map((userChar, index) => (
-                <Draggable key={userChar.id} draggableId={userChar.id.toString()} index={index}>
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      className="flex items-center justify-between p-4 bg-white rounded-lg shadow"
-                    >
-                      <div className="flex items-center gap-4">
-                        <span className="text-lg font-bold">{index + 1}</span>
-                        <div>
-                          <h3 className="font-bold">{userChar.name_jp}</h3>
-                          <p className="text-sm text-gray-600">
-                            {'★'.repeat(userChar.rarity)} | {userChar.element}
-                          </p>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => handleRemoveCharacter(userChar.id)}
-                        className="text-red-500 hover:text-red-700"
-                      >
-                        削除
-                      </button>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+          <div className="space-y-2">
+            {selectedCharacters.map((character, index) => (
+              <SortableCharacterItem key={character.id} character={character} index={index} />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }
