@@ -4,7 +4,7 @@ services:
     build:
       context: .
       target: deps
-    container_name: genshin-planner-app-dev
+    container_name: ojodo-app-dev
     command: npm run dev
     env_file:
       - .env
@@ -15,14 +15,14 @@ services:
     ports:
       - '3000:3000'
     networks:
-      - genshin-planner-network
+      - ojodo-network-dev
     depends_on:
       - db
 
   db:
     build:
       context: ./prisma
-    container_name: genshin-planner-db-dev
+    container_name: ojodo-db-dev
     env_file:
       - .env
     environment:
@@ -35,12 +35,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - genshin-planner-network
+      - ojodo-network-dev
 
 volumes:
   postgres_data:
-    name: genshin-planner-db-dev-data
+    name: ojodo-db-dev-data
 
 networks:
-  genshin-planner-network:
-    name: genshin-planner-network-dev
+  ojodo-network-dev:
+    driver: bridge

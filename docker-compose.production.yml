@@ -3,18 +3,18 @@ services:
   app:
     build:
       context: .
-    container_name: genshin-planner-app
+    container_name: ojodo-app
     env_file:
       - .env
     ports:
       - '3000:3000'
     networks:
-      - genshin-planner-network
+      - ojodo-network
 
   db:
     build:
       context: ./prisma
-    container_name: genshin-planner-db
+    container_name: ojodo-db
     env_file:
       - .env
     environment:
@@ -25,7 +25,7 @@ services:
     ports:
       - '5432:5432'
     networks:
-      - genshin-planner-network
+      - ojodo-network
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -33,5 +33,5 @@ volumes:
   postgres_data:
 
 networks:
-  genshin-planner-network:
+  ojodo-network:
     driver: bridge
