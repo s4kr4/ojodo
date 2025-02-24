@@ -1,6 +1,6 @@
 'use client';
 
-import PriorityList from './components/PriorityList';
+import PriorityList from './_components/PriorityList';
 
 /**
  * マイページ
