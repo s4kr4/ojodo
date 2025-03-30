@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   app:
     build:
@@ -44,3 +43,4 @@ volumes:
 networks:
   ojodo-network-dev:
     driver: bridge
+
